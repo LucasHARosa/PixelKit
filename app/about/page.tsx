@@ -15,6 +15,7 @@ const credits = [
   { name: "BiRefNet", by: "Peng Zheng et al., ONNX by onnx-community", license: "MIT", use: "High-quality background removal model" },
   { name: "libheif", by: "struktur AG, packaged by libheif-js", license: "LGPL-3.0", use: "HEIC/HEIF decoding" },
   { name: "Cult UI", by: "Nolly Studio", license: "MIT", use: "Cutout card and circuit board components" },
+  { name: "Pixel Trail", by: "Originkit", license: "Originkit", use: "Landing page pixel effect" },
   { name: "shadcn/ui, Radix, Lucide", by: "their authors", license: "MIT / ISC", use: "Interface components and icons" },
 ];
 
