@@ -34,7 +34,7 @@ export const tools: Tool[] = [
   {
     slug: "image-info",
     name: "Image info",
-    description: "Format, dimensions, transparency and file size of any image.",
+    description: "Real format, dimensions, transparency, animation and EXIF, including GPS.",
     icon: Info,
     category: "image",
     stage: "W1",
@@ -47,7 +47,7 @@ export const tools: Tool[] = [
     icon: Minimize2,
     category: "image",
     stage: "W2",
-    available: false,
+    available: true,
   },
   {
     slug: "resize",
@@ -56,16 +56,16 @@ export const tools: Tool[] = [
     icon: Scaling,
     category: "image",
     stage: "W2",
-    available: false,
+    available: true,
   },
   {
     slug: "convert",
     name: "Convert",
-    description: "PNG, JPEG, WebP, AVIF, BMP, TIFF and GIF. Opens HEIC and ICO.",
+    description: "Between PNG, JPEG, WebP, AVIF, BMP, TIFF and GIF. Also opens ICO.",
     icon: Repeat2,
     category: "image",
     stage: "W2",
-    available: false,
+    available: true,
   },
   {
     slug: "favicon",
