@@ -35,4 +35,23 @@ Validation is `pnpm lint`, `pnpm build` and the manual checklist in `TESTING.md`
 Heavy work never runs on the main thread. Each family (image codecs, AI, PDF, vector) has its own module worker, created on first use and importing its library with a dynamic `import()`, so the landing page loads no WASM and a crash in one library doesn't take down the others. Workers are created with `new Worker(new URL('./x.worker.ts', import.meta.url), { type: 'module' })`, the form Turbopack recognizes.
 
 ## W-011 — W0 go/no-go · Proposed
-Filled in after the measurements in [RESEARCH.md](RESEARCH.md#w0-measurements): for each W0 target, "go", "adjust" (e.g. smaller AI input, AVIF speed) or "no-go" with the alternative.
+Filled in after the measurements in [RESEARCH.md](RESEARCH.md#w0-measurements): for each W0 target, "go", "adjust" (e.g. smaller AI input, AVIF speed) or "no-go" with the alternative. Until then `/lab` stays in the repository (not linked from the site, `noindex`), so the measurements can still be taken on every browser; it is removed once the table is complete.
+
+## W-012 — shadcn/ui with the Radix base and the `nova` preset · Accepted (2026-10-30)
+`shadcn init` (CLI 4.23) with `-b radix -p nova` (Lucide icons, Geist). It installs `radix-ui`, `class-variance-authority`, `tw-animate-css`, `shadcn` (for `shadcn/tailwind.css`) and `cn`, the shadcn team's compiled replacement for `clsx` + `tailwind-merge` (MIT). The preset's colors are replaced by the design tokens and the dark theme is removed (light only).
+
+## W-013 — The brand lime is `--highlight`, not `--accent` · Accepted (2026-10-30)
+shadcn components use `--accent` as the hover background of menus and ghost buttons. Mapping the lime there would turn every hover green. `--accent` stays a neutral subtle surface and the lime gets its own token, used only as a background or mark with dark text (it fails contrast as text color).
+
+## W-014 — Cult UI components adapted, Circuit Board rewritten · Accepted (2026-10-30)
+- **Cutout Card** (`shadcn add @cult-ui/cutout-card`, MIT; pulls `motion` and `@radix-ui/react-use-controllable-state`) is used for the tool cards with two edits: a 1px border instead of the multi-layer shadow, and a flat tint instead of the overlay gradient.
+- **Circuit Board** is not installed: the registry item is a fixed marketing block (a "Powered By" chip, React/Turbopack/SWC cards, gradient pulses and glows in orange, blue and pink). A small component in `components/ui/circuit-board.tsx` keeps only the idea (traces into a chip naming the operation) in the design's colors, with no gradients and no animation under reduced motion.
+
+## W-015 — Pixel Trail waits for a license check · Proposed (2026-10-30)
+`originkit add pixel-trail` needs a signed-in Originkit account and fetches code from a private API. The CLI is MIT, but the license of the delivered component isn't stated anywhere. Code with unknown terms can't go into an AGPL project. The maintainer runs the command, the generated code and Originkit's terms are reviewed, and only then is it used, inside the hero's decorative box only. Until then that box shows a static pixel field.
+
+## W-016 — Own format sniffing and header parsing · Accepted (2026-10-30)
+Detecting the real format needs only the magic bytes of eleven formats, and refusing decompression bombs needs width and height from PNG, JPEG, GIF, BMP and WebP headers. Both are ~150 lines in `lib/codecs/` with no dependency, and run before any decode. `file-type` stays an option if more formats (archives, video) are ever needed.
+
+## W-017 — First tool in W1: Image info · Accepted (2026-10-30)
+The plan called for an example route to prove the worker plumbing. A real tool proves the same thing without a throwaway page: Image info goes through Dropzone → worker → sniffing → header limits → decode → result. W2 adds EXIF, GPS and animation frames to it.
