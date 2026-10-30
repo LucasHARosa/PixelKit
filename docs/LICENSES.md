@@ -47,6 +47,18 @@ Before adding a dependency, check its license and record the reason in [DECISION
 | @huggingface/transformers | 4.3.2 | Apache-2.0 | yes (AI tools) | Background removal pipeline |
 | onnxruntime-web (via transformers) | 1.31.0-dev | MIT | yes (AI tools) | Inference on WebGPU/WASM |
 | @jsquash/avif | 2.1.1 | Apache-2.0 | yes | AVIF encoder (libavif) |
+| @jsquash/jpeg | 1.6.0 | Apache-2.0 | yes | JPEG encoder (MozJPEG) |
+| @jsquash/png | 3.1.1 | Apache-2.0 | yes | PNG encoder |
+| @jsquash/oxipng | 2.3.0 | Apache-2.0 | yes | PNG optimizer (single-threaded build) |
+| @jsquash/webp | 1.5.0 | Apache-2.0 | yes | WebP encoder (libwebp) |
+| @jsquash/resize | 2.1.1 | Apache-2.0 | yes | Lanczos / bicubic / bilinear resizing |
+| wasm-feature-detect (via jSquash) | 1.9.0 | Apache-2.0 | yes | SIMD detection |
+| image-q | 4.0.0 | MIT | yes | PNG palette building |
+| exifr | 7.1.3 | MIT | yes | Reading EXIF and GPS |
+| piexifjs | 1.0.6 | MIT | yes | Copying JPEG EXIF ("keep metadata") |
+| utif | 3.1.0 | MIT | yes | TIFF decode and encode |
+| pako (via utif) | 1.0.11 | MIT AND Zlib | yes | Deflate for compressed TIFF |
+| gifenc | 1.0.3 | MIT | yes | GIF encoder |
 | **mupdf** (MuPDF.js) | 1.28.1 | **AGPL-3.0-or-later** | yes (PDF tools) | PDF engine |
 | libheif-js | 1.23.5 | **LGPL-3.0** | yes (HEIC) | HEIC/HEIF decoding |
 

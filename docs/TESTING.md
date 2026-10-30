@@ -50,6 +50,24 @@ Use `pnpm preview`, not `pnpm dev`, for anything involving workers, WASM threads
   - [ ] `corrupt.png` → damaged-file error; `random.bin` → format-not-supported error.
 - [ ] Footer "Source code" link on every page.
 
+### W2
+
+- [ ] Image info: `with-metadata.jpg` shows the EXIF section (camera "SecretCamera"); `photo.jpg` shows orientation 6; `animated.gif` shows 2 frames.
+- [ ] Compress:
+  - [ ] `detailed.jpg` at quality 80 → smaller JPEG, "Saved" shown in green, before/after slider works;
+  - [ ] `transparent.png` (Same as original) → lossy PNG, transparency kept, smaller;
+  - [ ] `transparent.png` → JPEG: "Transparency filled" warning;
+  - [ ] a tiny or already optimized file → "No size reduction";
+  - [ ] `with-metadata.jpg` → metadata gone by default (check again in Image info); kept with "Keep metadata".
+- [ ] Resize:
+  - [ ] `photo.jpg` width 200 → upright (portrait) result;
+  - [ ] `logo.png` 100×100 cover → exactly 100×100;
+  - [ ] width 5000 without "Allow enlarging" → original size; with it → "Image enlarged".
+- [ ] Convert: `transparent.png` to each of PNG, JPEG, WebP, AVIF, BMP, TIFF, GIF; download each and open it again in Image info (and in the OS viewer).
+- [ ] `animated.gif` → "Only the first frame" warning.
+- [ ] `corrupt.png`, `random.bin`, `too-many-pixels.png` → clear errors in all three tools.
+- [ ] Cancel during an AVIF encode stops it; the next run works.
+
 ## Samples
 
 [`samples/`](../samples/README.md) holds small generated files, including hostile ones. Real camera photos (12 MP JPEG, iPhone HEIC) are used locally and not committed.

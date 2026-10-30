@@ -65,6 +65,13 @@ Consequences:
 ## W-019 — Browser stub for Node's `module` · Accepted (2026-10-30)
 `mupdf-wasm.js` runs `await import("module")` only when it detects Node.js, but the bundler still has to resolve it. `turbopack.resolveAlias` maps `module` to an empty file (`lib/node-stub.ts`) for browser builds. `tsconfig.json` also excludes `out/`: Turbopack copies each `*.worker.ts` there as a static asset (besides the real worker chunk), and the type checker would otherwise pick those copies up.
 
+## W-020 — W2 image pipeline choices · Accepted (2026-10-30)
+- **Decoding** uses the browser (`createImageBitmap` in the worker, which also applies EXIF orientation); TIFF uses `utif`. Encoding always uses WASM/JS encoders (W-007).
+- **Resizing** uses `@jsquash/resize` (Squoosh's Lanczos 3, Catmull-Rom, triangle) instead of `pica`: same family as the other codecs, one WASM module, no worker pool of its own. Nearest neighbor is a few lines of JS.
+- **Lossy PNG:** `image-q` creates one object per pixel, which needs more than 1 GB for a 12 MP photo. It now only builds the palette (Wu quantizer, ≤ 262 144-pixel sample); Floyd–Steinberg dithering onto that palette runs on typed arrays in `lib/image/quantize.ts`.
+- **OxiPNG** is imported from its single-threaded build (`codec/pkg`): the parallel build starts wasm-bindgen-rayon workers, the same kind of worker cycle as W-018.
+- **Keep metadata** uses `piexifjs` and is limited to JPEG → JPEG, as planned (RESEARCH, limitation 5).
+
 ## W-016 — Own format sniffing and header parsing · Accepted (2026-10-30)
 Detecting the real format needs only the magic bytes of eleven formats, and refusing decompression bombs needs width and height from PNG, JPEG, GIF, BMP and WebP headers. Both are ~150 lines in `lib/codecs/` with no dependency, and run before any decode. `file-type` stays an option if more formats (archives, video) are ever needed.
 

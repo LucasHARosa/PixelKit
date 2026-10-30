@@ -5,16 +5,16 @@
 
 PixelKit compresses, converts and resizes images, builds favicons and app-store screenshots, removes backgrounds with AI and edits PDFs, without uploading anything. Every file is processed on your own device with WebAssembly and WebGPU. There are no accounts, no analytics and no server that could see your files.
 
-> **Status: early development.** The feasibility spike (W0) and the foundation (W1) are in place; tools arrive stage by stage. See the [roadmap](docs/ROADMAP.md).
+> **Status: early development.** The foundation and the image core (info, compress, resize, convert) are in place; more tools arrive stage by stage. See the [roadmap](docs/ROADMAP.md).
 
 ## Features
 
 | Tool | What it does | Status |
 |---|---|---|
-| Image info | Real format (from the bytes, not the extension), dimensions, transparency, size | ✅ Available (EXIF in W2) |
-| Compress | JPEG, PNG, WebP, AVIF with quality control; shows the size saved | Planned (W2) |
-| Resize | Width/height with contain, cover or fill; no accidental upscaling | Planned (W2) |
-| Convert | PNG, JPEG, WebP, AVIF, BMP, TIFF, GIF; reads HEIC and ICO | Planned (W2, HEIC in W5) |
+| Image info | Real format (from the bytes, not the extension), dimensions, transparency, animation, EXIF and GPS | ✅ Available |
+| Compress | JPEG, PNG, WebP, AVIF with quality control; shows the size saved | ✅ Available |
+| Resize | Width/height with contain, cover or fill; no accidental upscaling | ✅ Available |
+| Convert | PNG, JPEG, WebP, AVIF, BMP, TIFF, GIF; reads ICO (HEIC in W5) | ✅ Available |
 | ICO & favicon | Multi-size ICO and a complete favicon package (ZIP) | Planned (W3) |
 | Store screenshots | The 27 official App Store and Google Play sizes, without alpha | Planned (W3) |
 | Remove background | AI on your GPU (WebGPU) or CPU; checkerboard preview | Planned (W4) |
@@ -62,7 +62,7 @@ Limits of the browser platform, such as memory per tab, canvas size on iPhone, A
 | Framework | Next.js 16 (App Router, `output: 'export'`), React 19, TypeScript | MIT |
 | UI | Tailwind CSS 4, shadcn/ui (Radix), Cult UI, Lucide, Motion | MIT / ISC |
 | Workers | Comlink | Apache-2.0 |
-| Image codecs | jSquash (MozJPEG, OxiPNG, libwebp, libavif), libheif-js | Apache-2.0 / LGPL-3.0 |
+| Image codecs | jSquash (MozJPEG, OxiPNG, libwebp, libavif, resize), image-q, utif, gifenc, exifr, libheif-js | Apache-2.0 / MIT / LGPL-3.0 |
 | PDF | MuPDF.js | AGPL-3.0 |
 | AI | Transformers.js + ONNX Runtime Web; ISNet (AGPL-3.0) and BiRefNet lite (MIT) models | Apache-2.0 / MIT |
 | Hosting | Vercel (static), with COOP/COEP headers | — |
@@ -142,4 +142,4 @@ PixelKit is built on [MuPDF.js](https://mupdf.readthedocs.io/) (Artifex), [jSqua
 
 ## Documentation
 
-[Vision](docs/VISION.md) · [Roadmap](docs/ROADMAP.md) · [Architecture](docs/ARCHITECTURE.md) · [Design](docs/DESIGN.md) · [Research](docs/RESEARCH.md) · [Decisions](docs/DECISIONS.md) · [Licenses](docs/LICENSES.md) · [Security](docs/SECURITY.md) · [Testing](docs/TESTING.md)
+[Vision](docs/VISION.md) · [Tools](docs/TOOLS.md) · [Roadmap](docs/ROADMAP.md) · [Architecture](docs/ARCHITECTURE.md) · [Design](docs/DESIGN.md) · [Research](docs/RESEARCH.md) · [Decisions](docs/DECISIONS.md) · [Licenses](docs/LICENSES.md) · [Security](docs/SECURITY.md) · [Testing](docs/TESTING.md)
