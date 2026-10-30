@@ -55,6 +55,16 @@ shadcn components use `--accent` as the hover background of menus and ghost butt
 
 `.originkit/` (the CLI's local credentials and notes) is git-ignored.
 
+## W-018 — Single-threaded AVIF encoder until the worker cycle is solved · Accepted (2026-10-30)
+`next build` hung forever, with no error and no CPU use. Bisecting the code found the cause: `@jsquash/avif` loads its multithreaded build (`avif_enc_mt.js`) whenever threads are available. That file starts a pthread worker (`avif_enc_mt.worker.mjs`) which imports `avif_enc_mt.js` back, and Turbopack (Next 16.4.3) loops on that worker cycle. The spike now imports the single-threaded build (`codec/enc/avif_enc.js`) directly, so the cycle is never bundled.
+
+Consequences:
+- W0 measures single-threaded AVIF; its target (≤ 6 s for 12 MP) applies to that build.
+- Before W2 ships AVIF output, decide whether that's enough. If not, serve the multithreaded encoder from `public/` outside the bundle (as with the ONNX Runtime, W-005) and load it at runtime.
+
+## W-019 — Browser stub for Node's `module` · Accepted (2026-10-30)
+`mupdf-wasm.js` runs `await import("module")` only when it detects Node.js, but the bundler still has to resolve it. `turbopack.resolveAlias` maps `module` to an empty file (`lib/node-stub.ts`) for browser builds. `tsconfig.json` also excludes `out/`: Turbopack copies each `*.worker.ts` there as a static asset (besides the real worker chunk), and the type checker would otherwise pick those copies up.
+
 ## W-016 — Own format sniffing and header parsing · Accepted (2026-10-30)
 Detecting the real format needs only the magic bytes of eleven formats, and refusing decompression bombs needs width and height from PNG, JPEG, GIF, BMP and WebP headers. Both are ~150 lines in `lib/codecs/` with no dependency, and run before any decode. `file-type` stays an option if more formats (archives, video) are ever needed.
 

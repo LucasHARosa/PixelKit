@@ -67,8 +67,8 @@ How to measure: `pnpm build && pnpm preview`, open `http://localhost:3000/lab`, 
 | ISNet fp16, WebGPU, 12 MP (pre + model + cutout) | ≤ 1.5 s | ❓ | ❓ | ❓ | ❓ | ❓ |
 | ISNet uint8, WASM, 12 MP | ≤ 8 s | ❓ | ❓ | ❓ | ❓ | ❓ |
 | BiRefNet lite fp16, WebGPU, 12 MP (extra) | — | ❓ | ❓ | ❓ | ❓ | ❓ |
-| AVIF 12 MP, speed 6 | ≤ 6 s | ❓ | ❓ | ❓ | ❓ | ❓ |
-| AVIF 12 MP, speed 8 | ≤ 6 s | ❓ | ❓ | ❓ | ❓ | ❓ |
+| AVIF 12 MP, speed 6 (single-threaded, W-018) | ≤ 6 s | ❓ | ❓ | ❓ | ❓ | ❓ |
+| AVIF 12 MP, speed 8 (single-threaded) | ≤ 6 s | ❓ | ❓ | ❓ | ❓ | ❓ |
 | Largest 2D canvas | record | ❓ | ❓ | ❓ | ❓ | ❓ |
 | MuPDF.js render + redaction (text gone after save) | works | ❓ | ❓ | ❓ | ❓ | ❓ |
 | HEIC 12 MP with libheif-js | ≤ 3 s | ❓ | — | — | — | — |
