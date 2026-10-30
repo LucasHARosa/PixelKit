@@ -138,7 +138,7 @@ In short: use it, change it and share it freely. If you distribute a modified ve
 
 ## Credits
 
-PixelKit is built on [MuPDF.js](https://mupdf.readthedocs.io/) (Artifex), [jSquash](https://github.com/jamsinclair/jSquash) and the Squoosh codecs, [Transformers.js](https://huggingface.co/docs/transformers.js) and [ONNX Runtime Web](https://onnxruntime.ai/), the [IS-Net](https://github.com/xuebinqin/DIS) and [BiRefNet](https://github.com/ZhengPeng7/BiRefNet) models (ONNX exports by onnx-community), [libheif](https://github.com/strukturag/libheif), [shadcn/ui](https://ui.shadcn.com/) and [Cult UI](https://www.cult-ui.com/). It started as a local Python/FastAPI app, whose research and measurements shaped this version.
+PixelKit is built on [MuPDF.js](https://mupdf.readthedocs.io/) (Artifex), [jSquash](https://github.com/jamsinclair/jSquash) and the Squoosh codecs, [Transformers.js](https://huggingface.co/docs/transformers.js) and [ONNX Runtime Web](https://onnxruntime.ai/), the [IS-Net](https://github.com/xuebinqin/DIS) and [BiRefNet](https://github.com/ZhengPeng7/BiRefNet) models (ONNX exports by onnx-community), [libheif](https://github.com/strukturag/libheif), [shadcn/ui](https://ui.shadcn.com/), [Cult UI](https://www.cult-ui.com/) and [Originkit](https://www.originkit.dev) (Pixel Trail). It started as a local Python/FastAPI app, whose research and measurements shaped this version.
 
 ## Documentation
 

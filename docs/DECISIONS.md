@@ -47,8 +47,13 @@ shadcn components use `--accent` as the hover background of menus and ghost butt
 - **Cutout Card** (`shadcn add @cult-ui/cutout-card`, MIT; pulls `motion` and `@radix-ui/react-use-controllable-state`) is used for the tool cards with two edits: a 1px border instead of the multi-layer shadow, and a flat tint instead of the overlay gradient.
 - **Circuit Board** is not installed: the registry item is a fixed marketing block (a "Powered By" chip, React/Turbopack/SWC cards, gradient pulses and glows in orange, blue and pink). A small component in `components/ui/circuit-board.tsx` keeps only the idea (traces into a chip naming the operation) in the design's colors, with no gradients and no animation under reduced motion.
 
-## W-015 — Pixel Trail waits for a license check · Proposed (2026-10-30)
-`originkit add pixel-trail` needs a signed-in Originkit account and fetches code from a private API. The CLI is MIT, but the license of the delivered component isn't stated anywhere. Code with unknown terms can't go into an AGPL project. The maintainer runs the command, the generated code and Originkit's terms are reviewed, and only then is it used, inside the hero's decorative box only. Until then that box shows a static pixel field.
+## W-015 — Pixel Trail from Originkit in the hero · Accepted (2026-10-30)
+`originkit add pixel-trail` (run by the maintainer, signed in) wrote `components/originkit/ui/pixel-trail.tsx`. It has no dependencies and doesn't re-render while the pointer moves. The CLI is MIT, but the delivered code carries no license and originkit.dev has no terms page. The maintainer chose to use it anyway. To keep that choice cheap to undo:
+- the file is kept unchanged in its own folder and configured only through props;
+- it is used in exactly one place (the hero box);
+- the static pixel field it replaces stays in the code as the reduced-motion fallback.
+
+`.originkit/` (the CLI's local credentials and notes) is git-ignored.
 
 ## W-016 — Own format sniffing and header parsing · Accepted (2026-10-30)
 Detecting the real format needs only the magic bytes of eleven formats, and refusing decompression bombs needs width and height from PNG, JPEG, GIF, BMP and WebP headers. Both are ~150 lines in `lib/codecs/` with no dependency, and run before any decode. `file-type` stays an option if more formats (archives, video) are ever needed.

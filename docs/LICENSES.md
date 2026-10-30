@@ -61,7 +61,7 @@ LGPL note: libheif-js is loaded as a separate module (its own chunk), so it stay
 | `components/ui/button.tsx` | shadcn/ui | MIT | `xl` size added |
 | `components/ui/cutout-card.tsx` | Cult UI (`@cult-ui/cutout-card`) | MIT | Shadow and overlay adapted to the design |
 | `components/ui/circuit-board.tsx` | Rewritten from Cult UI `circuit-board` | MIT | Attribution in the file header |
-| Pixel Trail | Originkit | ❓ Not stated for delivered components (the CLI itself is MIT) | Not adopted until its terms are reviewed |
+| `components/originkit/ui/pixel-trail.tsx` | Originkit (`originkit add pixel-trail`) | ⚠️ Not stated (no header in the file, no terms page on originkit.dev; the CLI itself is MIT) | Used by the maintainer's decision (DECISIONS W-015). Isolated in its own folder so it can be replaced by the static field if the terms ever require it |
 
 ## Fonts
 

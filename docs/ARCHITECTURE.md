@@ -30,6 +30,7 @@ app/
   lab/                                  # W0 feasibility spike, removed once its numbers are recorded
 components/
   ui/          # shadcn/ui and Cult UI components (button, cutout-card, circuit-board)
+  originkit/   # Pixel Trail, as delivered by the Originkit CLI (landing hero only)
   site/        # header, footer, logo
   landing/     # landing sections (hero visual, tool card, install button…)
   tool/        # shared tool building blocks (ToolPage, Dropzone, ProgressBar, FileDetails,
