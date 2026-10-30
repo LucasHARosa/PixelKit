@@ -46,6 +46,12 @@ function detailsFor(file: File, info: ImageInfo): Detail[] {
   if (info.hasAlpha != null) {
     details.push({ label: "Transparency", value: info.hasAlpha ? "Yes" : "No" });
   }
+  if (info.frames > 1) {
+    details.push({ label: "Animation", value: `${info.frames} frames` });
+  }
+  if (info.exif?.orientation && info.exif.orientation !== 1) {
+    details.push({ label: "Orientation", value: `EXIF ${info.exif.orientation} (shown upright, as cameras intend)` });
+  }
   if (info.tooLarge) {
     details.push({ label: "Note", value: "Too large to open in the browser. Size read from the file header." });
   }
@@ -54,6 +60,53 @@ function detailsFor(file: File, info: ImageInfo): Detail[] {
     details.push({ label: "Extension", value: `.${extension}, but the file is really ${info.formatLabel}` });
   }
   return details;
+}
+
+function ExifSection({ exif }: { exif: NonNullable<ImageInfo["exif"]> }) {
+  const summary: Detail[] = [
+    exif.camera && { label: "Camera", value: exif.camera },
+    exif.lens && { label: "Lens", value: exif.lens },
+    exif.takenAt && { label: "Taken", value: exif.takenAt },
+    exif.exposure && { label: "Exposure", value: exif.exposure },
+    exif.software && { label: "Software", value: exif.software },
+  ].filter((detail): detail is Detail => Boolean(detail));
+  const tagCount = Object.keys(exif.tags).length;
+  if (summary.length === 0 && !exif.gps && tagCount === 0) return null;
+
+  return (
+    <section className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-5">
+      <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Metadata (EXIF)</h2>
+      {exif.gps && (
+        <div className="flex flex-col gap-1 rounded-xl border border-border bg-highlight/40 p-3 text-sm">
+          <p className="font-medium">This photo contains its GPS location.</p>
+          <p className="font-mono">
+            {exif.gps.latitude.toFixed(6)}, {exif.gps.longitude.toFixed(6)}
+          </p>
+          <p>
+            Compress, Resize and Convert remove it unless you choose to keep metadata.{" "}
+            <a
+              href={`https://www.openstreetmap.org/?mlat=${exif.gps.latitude}&mlon=${exif.gps.longitude}#map=15/${exif.gps.latitude}/${exif.gps.longitude}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-4"
+            >
+              Open in OpenStreetMap
+            </a>
+          </p>
+        </div>
+      )}
+      {summary.length > 0 && <FileDetails details={summary} />}
+      {tagCount > 0 && (
+        <details className="text-sm">
+          <summary className="cursor-pointer font-medium">All tags ({tagCount})</summary>
+          <FileDetails
+            className="mt-3 text-xs"
+            details={Object.entries(exif.tags).map(([label, value]) => ({ label, value }))}
+          />
+        </details>
+      )}
+    </section>
+  );
 }
 
 export function ImageInfoTool() {
@@ -110,6 +163,11 @@ export function ImageInfoTool() {
               Check another image
             </Button>
           </div>
+          {state.info.exif && (
+            <div className="md:col-span-2">
+              <ExifSection exif={state.info.exif} />
+            </div>
+          )}
         </div>
       )}
     </div>
