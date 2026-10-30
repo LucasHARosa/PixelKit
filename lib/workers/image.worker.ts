@@ -2,11 +2,17 @@
 import * as Comlink from "comlink";
 import { HEADER_BYTES, readDimensions } from "@/lib/codecs/dimensions";
 import { formatInfo, sniffBytes, type DetectedFormat } from "@/lib/codecs/sniff";
+import { countFrames } from "@/lib/image/animation";
+import { readExif, type ExifSummary } from "@/lib/image/exif";
+import { compress, convert, resize, type CompressOptions, type ConvertOptions, type ResizeOptions } from "@/lib/image/operations";
 import { MAX_IMAGE_PIXELS } from "@/lib/limits";
+import type { ProgressCallback } from "./client";
 import { ToolError } from "./errors";
 
 /** Formats the browser itself decodes with createImageBitmap in every target browser. */
 const BROWSER_DECODABLE: DetectedFormat[] = ["png", "jpeg", "gif", "webp", "avif", "bmp", "ico"];
+/** Formats that can carry EXIF that exifr reads. */
+const EXIF_FORMATS: DetectedFormat[] = ["jpeg", "png", "webp", "avif", "heic", "tiff"];
 
 export type ImageInfo = {
   format: DetectedFormat;
@@ -20,6 +26,8 @@ export type ImageInfo = {
   hasAlpha: boolean | null;
   /** True when the image is above MAX_IMAGE_PIXELS, so it was described but not decoded. */
   tooLarge: boolean;
+  frames: number;
+  exif: ExifSummary | null;
 };
 
 async function decode(file: Blob): Promise<ImageBitmap> {
@@ -54,7 +62,10 @@ const api = {
     const format = sniffBytes(head);
     if (!format || format === "pdf") throw new ToolError("UNSUPPORTED_FORMAT");
     const info = formatInfo[format];
-    const base = { format, formatLabel: info.label, mime: info.mime, size: file.size };
+    const animatable = format === "gif" || format === "png" || format === "webp";
+    const frames = animatable ? countFrames(new Uint8Array(await file.arrayBuffer()), format) : 1;
+    const exif = EXIF_FORMATS.includes(format) ? await readExif(file) : null;
+    const base = { format, formatLabel: info.label, mime: info.mime, size: file.size, frames, exif };
 
     const header = readDimensions(head, format);
     if (header && header.width * header.height > MAX_IMAGE_PIXELS) {
@@ -76,6 +87,18 @@ const api = {
     } finally {
       bitmap.close();
     }
+  },
+
+  compress(file: Blob, options: CompressOptions, progress: ProgressCallback) {
+    return compress(file, options, progress);
+  },
+
+  resize(file: Blob, options: ResizeOptions, progress: ProgressCallback) {
+    return resize(file, options, progress);
+  },
+
+  convert(file: Blob, options: ConvertOptions, progress: ProgressCallback) {
+    return convert(file, options, progress);
   },
 };
 
