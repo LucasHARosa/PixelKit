@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
   output: "export",
   images: { unoptimized: true },
   turbopack: {
+    // mupdf imports "module" only when running in Node; browsers never reach it.
+    resolveAlias: {
+      module: { browser: "./lib/node-stub.ts" },
+    },
     rules: {
       "*.css": {
         loaders: ["@tailwindcss/turbopack"],
