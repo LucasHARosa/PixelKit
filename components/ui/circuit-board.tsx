@@ -4,7 +4,7 @@
 // the traces-into-a-chip idea is kept; the gradients, glows, colored pulses and
 // technology cards are removed to match docs/DESIGN.md. Used only for long operations.
 
-import { useSyncExternalStore } from "react";
+import { usePrefersReducedMotion } from "@/lib/hooks/use-reduced-motion";
 import { cn } from "@/lib/utils";
 
 const TRACES = [
@@ -15,20 +15,6 @@ const TRACES = [
   "M250 74H400",
   "M250 82H288C292.4 82 296 85.6 296 90V102C296 106.4 299.6 110 304 110H400",
 ];
-
-function subscribe(onChange: () => void) {
-  const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-  query.addEventListener("change", onChange);
-  return () => query.removeEventListener("change", onChange);
-}
-
-function usePrefersReducedMotion() {
-  return useSyncExternalStore(
-    subscribe,
-    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-    () => true,
-  );
-}
 
 type CircuitBoardProps = {
   /** Text on the chip, e.g. "ISNet · WebGPU". */
@@ -65,7 +51,7 @@ export function CircuitBoard({ label, className }: CircuitBoardProps) {
       </svg>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <div className="flex items-center gap-2 rounded-lg bg-primary px-4 py-3 font-mono text-xs whitespace-nowrap text-primary-foreground">
-          <span className="size-2 animate-pulse rounded-[2px] bg-highlight" />
+          <span className="size-2 animate-pulse rounded-xs bg-highlight" />
           {label}
         </div>
       </div>
